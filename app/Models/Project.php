@@ -30,6 +30,10 @@ class Project extends Model
 
         return $slug;
     }
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }
 
 #user_id --- inizialmente non c'è ma lo metto, poi lo aggiungiamo a mano
