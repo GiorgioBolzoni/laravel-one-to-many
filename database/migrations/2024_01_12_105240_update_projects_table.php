@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->renameColumn('author_id', 'user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')->cascadeOnDelete();
         });
     }
 
@@ -20,8 +22,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->renameColumn('user_id', 'author_id');
-        });
+        // Schema::table('projects', function (Blueprint $table) {
+        //     $table->dropForeign('projects_user_id_foreign');
+
+        // });
     }
 };

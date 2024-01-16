@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
+use App\Models\Type;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreProjectRequest;
@@ -40,8 +42,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
-
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -50,27 +52,43 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $form_data = $request->validated();
-        // dd($form_data);
 
+        // Aggiungere la chiave 'type_id' alle regole di validazione se non è già presente
+        $request->merge(['type_id' => $request->input('type_id', null)]);
+
+        // Generare lo slug e l'ID utente
         $slug = Project::getSlug($form_data['title']);
-
-
-        $form_data['slug'] = $slug;
-
         $userId = auth()->id();
+
+        // Aggiungere lo slug e l'ID utente ai dati del modulo
+        $form_data['slug'] = $slug;
         $form_data['user_id'] = $userId;
 
+        // Gestire l'upload dell'immagine
         if ($request->hasFile('image')) {
             $name = Str::slug($form_data['title'], '-') . '.jpg';
             $img_path = Storage::putFileAs('images', $form_data['image'], $name);
             $form_data['image'] = $img_path;
         }
 
+        // Ottenere l'ID della tipologia dal modulo
+        $type_id = $request->input('type_id');
 
-        $newProject = Project::create($form_data);
+        // Salvataggio dell'associazione progetto-tipologia
+        $type = Type::find($type_id);
 
-        return to_route('admin.projects.index');
+        if ($type) {
+            $newProject = Project::create($form_data);
+            $newProject->type()->associate($type);
+            $newProject->save();
+
+            return redirect()->route('admin.projects.index')->with('success', 'Project created successfully');
+        } else {
+            return redirect()->back()->with('error', 'Invalid type selected');
+        }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -86,7 +104,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project', 'types'));
 
     }
 
