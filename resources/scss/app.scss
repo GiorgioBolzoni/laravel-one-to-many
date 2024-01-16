@@ -1,0 +1,103 @@
+@use './partials/variables' as *;
+
+$fa-font-path: "../fonts/webfonts" !default;
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+@import '~bootstrap/scss/bootstrap';
+
+#app{
+    width:100%;
+    height: 100vh;
+    background-color: $oxford-blue;
+
+}
+
+h1 {
+    color: $orange-web;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 30px;
+}
+h3{
+    color: $platinum;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 30px;
+}
+
+#nav{
+    height: 80px !important;
+    width: 100%;
+    nav{
+        background-color: $black;
+        height: 100%;
+        color: $orange-web;
+        a{
+        color: $platinum !important;
+            &:hover{
+                color: $orange-web !important;
+            }
+        }
+
+    }
+}
+
+a {
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+
+/* main  */
+main{
+    height: calc(100% - 80px);
+}
+.main-content {
+
+    height: 100%;
+    width: calc(100% - 150px);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+#sidebar {
+    width: 150px;
+    height: 100%;
+    text-align: center;
+    background-color: $black;
+    padding-top: 20px;
+    a{
+        color: $platinum!important;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border: 1px solid transparent;
+        width: 100%;
+        &:hover{
+            color: $orange-web !important;
+            border-bottom: 1px solid $platinum;
+            border-top: 1px solid $platinum;
+        }
+    }
+}
+.sb-sidenav .sb-sidenav-footer {
+    padding: 0.75rem;
+    flex-shrink: 0;
+  }
+.sb-sidenav-footer {
+color: $platinum;
+}
+.dropdown-menu{
+    border: 1px solid $platinum;
+    background-color: $black;
+    a:hover{
+        background-color: $black;
+    }
+
+}
