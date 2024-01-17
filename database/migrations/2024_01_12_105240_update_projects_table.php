@@ -22,9 +22,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // Schema::table('projects', function (Blueprint $table) {
-        //     $table->dropForeign('projects_user_id_foreign');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign('projects_user_id_foreign');
 
-        // });
+        });
     }
 };

@@ -15,8 +15,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $categories = Type::all();
-        return view('admin.categories.index', compact('categories'));
+        $types = Type::all();
+        return view('admin.types.index', compact('types'));
     }
 
     /**
@@ -24,7 +24,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.types.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class TypeController extends Controller
         //add slug to formData
         $formData['slug'] = $slug;
         $type = Type::create($formData);
-        return redirect()->route('admin.categories.show', $type->slug);
+        return redirect()->route('admin.types.show', $type->slug);
     }
 
     /**
@@ -46,7 +46,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return view('admin.categories.show', compact('type'));
+        return view('admin.types.show', compact('type'));
     }
 
     /**
@@ -54,7 +54,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return view('admin.categories.edit', compact('type'));
+        return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -71,7 +71,7 @@ class TypeController extends Controller
             $formData['slug'] = $slug;
         }
         $type->update($formData);
-        return redirect()->route('admin.categories.show', $type->slug);
+        return redirect()->route('admin.types.show', $type->slug);
 
     }
 
@@ -81,6 +81,6 @@ class TypeController extends Controller
     public function destroy(Type $type)
     {
         $type->delete();
-        return to_route('admin.categories.index')->with('message', "$type->name eliminato con successo");
+        return to_route('admin.types.index')->with('message', "$type->name eliminato con successo");
     }
 }
