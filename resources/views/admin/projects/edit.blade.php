@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <section class="container">
         <h1>Edit {{ $project->title }}</h1>
@@ -32,6 +33,18 @@
                                 @enderror
                             </div>
 
+                            <!-- Aggiungi il campo della tipologia -->
+                            <div class="mb-3">
+                                <label for="type_id">Tipologia</label>
+                                <select name="type_id" id="type_id" class="form-control">
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ $type->id == $project->type_id ? 'selected' : '' }}>
+                                            {{ $type->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="body">Body</label>
